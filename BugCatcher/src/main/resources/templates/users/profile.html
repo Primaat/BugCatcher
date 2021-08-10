@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">    
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+          <!-- Dashboard Header Section    -->
+          <section id="elementtopmargin" class="dashboard-header">
+			<div class="container">
+			  <div class="row row-cols-2">	
+			  	<div class="col-7">
+				  <div class="statistic d-flex align-items-center bg-white has-shadow">
+					   <div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow">
+	   			  	 		<h1>Your Profile</h1>
+	   			  	 	</div>	
+   			  	 		<table class="table" th:each="user : ${user}">
+   						<tr>
+							<th scope="col">First name</th>
+							<th scope="col">Last name</th>				
+						</tr>
+						<tr>
+							<td th:text="${user.firstName}">Jack</td>
+						 	<td th:text="${user.lastName}">Human</td>			
+						</tr>	
+						<tr>
+							<th>Email address</th>
+							<th>Role</th>
+						</tr>
+						<tr>
+							<td th:text="${user.emailAddress}">123@mail.com</td>
+							<td th:text="${user.role}">Cook</td>		
+						</tr>	
+						<tr>
+							<th>Assigned Projects</th>
+							<th>Assigned Tickets</th>
+						</tr>
+						<tr>
+							<td>
+								<table class="table" th:each="user : ${user}">
+									<tr th:each="project : ${user.assignedProjects}">
+										<td th:text="${project.projectName}"></td>
+									</tr>							
+								</table>
+							</td>
+							<td>
+								<table class="table" th:each="user : ${user}">
+									<tr th:each="ticket : ${user.ticketSet}">
+										<td th:text="${ticket.title}"></td>
+									</tr>							
+								</table>
+							</td>
+						</tr>
+						<tr >
+							<td><a sec:authorize="hasAnyRole('ROLE_Administrator', 'ROLE_Project_Manager')" th:href="@{/user/update/{id}(id=${user.id})}">Edit</a></td>						 	
+							<td></td>
+						</tr>
+					</table>
+			   	   </div>
+			   	 </div>
+		   	   </div>
+		   	 </div>
+			</section>
+          <!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>

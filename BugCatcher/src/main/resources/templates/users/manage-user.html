@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">    
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+          <!-- Dashboard Header Section    -->
+          <section id="elementtopmargin" class="dashboard-header">
+			<div class="container">
+			  <div class="row row-cols-2">	
+			  	<div class="col-5">
+				  <div class="statistic d-flex align-items-center bg-white has-shadow">
+   			  	 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow">
+   			  	 		<h1>Manage User</h1>
+   			  	 	</div>				  		  
+				   <table class="table" th:each="user : ${user}">
+						<tr>
+							<th scope="col">First name</th>
+							<th scope="col">Last name</th>				
+						</tr>
+						<tr>
+							<td th:text="${user.firstName}">Jack</td>
+						 	<td th:text="${user.lastName}">Human</td>			
+						</tr>	
+						<tr>
+							<th>Email address</th>
+							<th>Role</th>
+						</tr>
+						<tr>
+							<td th:text="${user.emailAddress}">123@mail.com</td>
+							<td th:text="${user.role}">Cook</td>		
+						</tr>	
+						<tr>
+							<th>Assigned Projects</th>
+							<th>Assigned Tickets</th>
+						</tr>
+						<tr>
+							<td>
+								<table class="table" th:each="user : ${user}">
+									<tr th:each="project : ${user.assignedProjects}">
+										<td th:text="${project.projectName}"></td>
+									</tr>							
+								</table>
+							</td>
+							<td>
+								<table class="table" th:each="user : ${user}">
+									<tr th:each="ticket : ${user.ticketSet}">
+										<td th:text="${ticket.title}"></td>
+									</tr>							
+								</table>
+							</td>
+						</tr>
+						<tr >
+							<td><a th:href="@{/user/update/{id}(id=${user.id})}">Edit</a></td>						 	
+							<td><a th:href="@{/user/delete/{id}(id=${user.id})}" 
+					        th:data-confirm-delete="|Are you sure you want to delete user : ${user.fullName}?|"
+					  		onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a></td>
+						</tr>
+					</table>
+				   	 </div>
+			   	 </div>
+			  <div class="col-7">
+				  <div class="statistic d-flex align-items-left bg-white has-shadow">
+   			  	 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow">   			  	 		
+   			  	 		<div class="container-fluid"> 
+			           	  <div class="row row-cols-12">
+			            	<div class="col-4">
+			            		<h1>Users</h1>
+				 			</div>
+				 			<div class="col-3">
+				 			</div>
+		  	 				<div class="col-5 addbutton">
+	 			 				<a th:href="@{/user/addUser}" class="btn btn-success ">&nbsp;Add New User</a>
+	 						</div>		 			 
+			           	  </div>
+			            </div>
+
+		  	 		</div>				  
+				  <table id= "table_id" class="display">
+					  <tbody>
+					    <tr th:each="user : ${users}">
+					      <td th:text="${user.fullName}">Jan</td>
+   					      <td th:text="${user.emailAddress}">Email</td>
+  					      <td th:text="${user.role}">Role</td>
+  					      <td><a th:href="@{/user/{id}(id=${user.id})}">manage</a></td> 
+					    </tr>					    
+				      </tbody>
+					</table>
+					<!-- Datatables scripts -->
+					<script type="text/javascript">$(document).ready(function() {
+			    	  $('#table_id').DataTable({
+			    		    "columns": [{
+			    		        "title": "User Name"
+			    		      },
+			    		      {
+			    		        "title": "Email Address"
+			    		      },
+			    		      {
+			    		        "title": "Role"
+			    		      },
+			    		      {
+			    		        "title": ""
+			    		      }
+			    		    ]
+			    		  });
+			    		});
+		    		</script>
+				  </div>
+				  </div>
+				</div>	
+			</section>
+          <!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>

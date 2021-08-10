@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">    
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+          <!-- Page Header, DOES NOT FRAGMENT!!!-->
+          <header class="page-header bg-violet">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Dashboard</h2>
+            </div>
+          </header>
+          <!-- Dashboard Header Section    -->
+          <section class="dashboard-header">
+            <div class="container-fluid">
+              <div class="row">
+                <!-- Statistics -->
+                <div class="col-lg-6 col-3">
+                  <div class="statistic d-flex align-items-center bg-white has-shadow">
+                  <a th:href="@{/tickets}" role="button"><span class="hyperspan"></span></a>
+                    <div class="icon bg-blue"><i class="fa fa-tasks"></i>
+                    <a th:href="@{/tickets}" role="button"><span class="hyperspan"></span></a></div>
+                    <div><div class="text fw-bold fs-3" th:text="${open}"> 
+                    </div><small>New Tickets</small></div>                    
+                  </div>
+                  <div class="statistic d-flex align-items-center bg-white has-shadow">
+                  <a th:href="@{/tickets}" role="button"><span class="hyperspan"></span></a>
+                    <div class="icon bg-yellow"><i class="fa fa-calendar-o"></i>
+                    <a th:href="@{/tickets}" role="button"><span class="hyperspan"></span></a></div>
+                    <div><div class="text fw-bold fs-3" th:text="${open}"> 
+                    </div><small>Unresolved Tickets</small></div>
+                   </div> 
+                   <div class="statistic d-flex align-items-center bg-white has-shadow">
+                   <a th:href="@{/urgent}" role="button"><span class="hyperspan"></span></a>
+                    <div class="icon bg-red"><i class="fa fa-line-chart"></i>
+                    <a th:href="@{/urgent}" role="button"><span class="hyperspan"></span></a></div>
+                    <div><div class="text fw-bold fs-3" th:text="${urgent}"> 
+                    </div><small>Urgent Tickets</small></div>
+                   </div> 
+                   <div class="statistic d-flex align-items-center bg-white has-shadow">
+                   <a th:href="@{/resolved}" role="button"><span class="hyperspan"></span></a>
+                    <div class="icon bg-green"><i class="fa fa-line-chart"></i>
+                    <a th:href="@{/resolved}" role="button"><span class="hyperspan"></span></a></div>
+                    <div><div class="text fw-bold fs-3" th:text="${resolved}"> 
+                    </div><small>Resolved Tickets</small></div>
+                   </div> 
+                </div>  
+                <div class="col-lg-6 col-3">
+                <div class="statistic d-flex align-items-center bg-white has-shadow">
+                  <a th:href="@{/bugs}" role="button"><span class="hyperspan"></span></a>
+                    <div class="icon bg-gray"><i class="icon icon-padnote"></i>
+                    <a th:href="@{/bugs}" role="button"><span class="hyperspan"></span></a></div>
+                    <div><div class="text fw-bold fs-3" th:text="${bugs}"> 
+                    </div><small>Bugs/Errors</small></div>                    
+                  </div>
+                  <div class="statistic d-flex align-items-center bg-white has-shadow">
+                  <a th:href="@{/documentation}" role="button"><span class="hyperspan"></span></a>
+                    <div class="icon bg-gray"><i class="icon icon-padnote"></i>
+                    <a th:href="@{/documentation}" role="button"><span class="hyperspan"></span></a></div>
+                    <div><div class="text fw-bold fs-3" th:text="${documentation}"> 
+                    </div><small>Documentation Requests</small></div>                    
+                  </div>
+                  <div class="statistic d-flex align-items-center bg-white has-shadow">
+                  <a th:href="@{/feature}" role="button"><span class="hyperspan"></span></a>
+                    <div class="icon bg-gray"><i class="icon icon-padnote"></i>
+                    <a th:href="@{/feature}" role="button"><span class="hyperspan"></span></a></div>
+                    <div><div class="text fw-bold fs-3" th:text="${feature}"> 
+                    </div><small>Feature Requests</small></div>                    
+                  </div>
+                  <div class="statistic d-flex align-items-center bg-white has-shadow">
+                  <a th:href="@{/other}" role="button"><span class="hyperspan"></span></a>
+                    <div class="icon bg-gray"><i class="icon icon-padnote"></i>
+                    <a th:href="@{/other}" role="button"><span class="hyperspan"></span></a></div>
+                    <div><div class="text fw-bold fs-3" th:text="${other}"> 
+                    </div><small>Other</small></div>                    
+                  </div>
+                </div>                          
+              </div>
+            </div>
+          </section>
+          <!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>

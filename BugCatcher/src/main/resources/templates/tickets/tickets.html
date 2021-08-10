@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">    
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+<!--           Page Header, DOES NOT FRAGMENT!!! -->
+<!--           <header class="page-header"> -->
+<!--             <div class="container-fluid bg-transparant"> -->
+<!--              <h2 class="no-margin-bottom">Tickets</h2>  -->
+<!--             </div> -->
+<!--           </header> -->
+          <!-- Dashboard Header Section    -->
+          <section id="elementtopmargin" class="dashboard-header">
+			<div class="container">
+			  <div class="statistic align-items-center bg-white has-shadow">
+ 			  	 	<div class="tableheader statistic d-flex align-items-left bg-violet has-shadow">
+ 			  	 		<div class="container-fluid"> 
+		           	  <div class="row row-cols-12">
+		            	<div class="col-4">
+		            		<h1>Tickets</h1>
+			 			</div>
+			 			<div class="col-5">
+			 			</div>
+	  	 				<div sec:authorize="hasRole('ROLE_Administrator')" class="col-3 addbutton-wide">
+	 						 <a th:href="@{/createTicket}" class="btn btn-success">&nbsp;Create Ticket</a>
+ 						</div>		 			 
+		           	  </div>
+		            </div>
+	  	 		  </div>					  
+				  <table id="table_id" class="display table-striped">
+					   <tbody>
+					    <tr th:each="ticket : ${tickets}">
+						 	<th scope = "row" th:text="${ticket.id}" value="0">123</td>
+						 	<td th:text="${ticket.title}">Jack</td>
+						 	<td th:text="${ticket.description}">Human</td>	
+						 	<td th:text="${ticket.projectName}">Human</td>							 	
+						 	<td th:text="${ticket.ticketPriority}">ejdhwefwe@skadhwdjka.com</td>
+						 	<td th:text="${ticket.ticketStatus}">Bonk</td> 
+						 	<td th:text="${ticket.ticketType}">Bonk</td> 	
+						 	<td th:text="${#temporals.format(ticket.creationTimeStamp, 'dd-MM-yyyy HH:mm')}">Bonk</td> 	
+						 	<td>
+							 	<ul>
+							 		<li><span><a th:href="@{/ticket/{ticketId}(ticketId=${ticket.id})}">Details</a></span></li>
+							 		<li><span><a th:href="@{/modify/{id}(id=${ticket.id})}">Edit</a></span></li>
+							 		<li sec:authorize="hasAnyRole('ROLE_Administrator', 'ROLE_Project_Manager')"><span><a th:href="@{/delete/{id}(id=${ticket.id})}" 
+								        th:data-confirm-delete="|Are you sure you want to ticket no.: ${ticket.id}?|"
+								  		onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a></span></li>					 	
+							 	</ul>					 	
+					  		</td>	 		
+						</tr>
+				      </tbody>
+					</table>
+					<script type="text/javascript">$(document).ready(function() {
+			    	  $('#table_id').DataTable({
+			    		    "columns": [{
+			    		        "title": "#"
+			    		      },
+			    		      {
+			    		        "title": "Title"
+			    		      },
+			    		      {
+			    		        "title": "Description"
+			    		      },
+			    		      {
+			    		        "title": "Project"
+			    		      },
+			    		      {
+			    		        "title": "Ticket Priority"
+			    		      },
+			    		      {
+			    		        "title": "Ticket Status"
+			    		      },
+			    		      {
+			    		        "title": "Ticket Type"
+			    		      },
+			    		      {
+			    		        "title": "Creation Time"
+			    		      },
+			    		      {
+			    		        "title": ""
+			    		      }
+			    		    ],
+			    		    columnDefs: [ {
+						        targets: 2,
+						        render: function ( data, type, row ) {
+						            return data.substr( 0, 16 );
+						        }
+						    } ]
+			    		  });		    		  	
+			    		});
+		    		</script>
+				  </div>
+				  </div>
+					
+			</section>
+		  <!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>

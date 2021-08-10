@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">    
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+          <!-- Dashboard Header Section    -->
+          <section id="elementtopmargin" class="dashboard-header">
+			<div class="container-fluid">
+			  <div class="row row-cols-2">
+			    <div class="col">
+			   	 <div class="statistic d-flex align-items-center bg-white has-shadow">
+   			  	 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow">
+   			  	 		<h1>Create a Ticket</h1>
+		  	 		</div>				  
+				    <form id= "ticketForm" action="#" th:action="@{/create}" th:object="${ticket}" method="post">
+				    	<div class="mb-3">
+				    	<p>Title</p> 
+				        <input type="text" th:field="*{title}" />
+				        </div>
+   				        <div class="mb-3">
+						  <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+						  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:field="*{description}" ></textarea>
+						</div>
+						<label id="ticketPriority">Ticket Priority</label>
+						<div class="mb-3">   				        
+	   				        <select  class="form-control" th:field="*{ticketPriority}">
+	   							<option th:each="state : ${T(com.bugcatcher.enums.TicketPriority).values()}" th:value="${state}" th:text="${state}"></option>
+							</select>
+						</div>
+	   				        <label id="ticketType">Ticket Type:</label>						
+						<div class="mb-3">
+							<select class="form-control" th:field="*{ticketType}">
+	  							<option th:each="state : ${T(com.bugcatcher.enums.TicketType).values()}" th:value="${state}" th:text="${state}"></option>
+							</select>
+						</div>
+<!-- 						<p th:text="${#temporals.format(localDateTime, 'dd-MM-yyyy HH:mm')}"></p>						 -->
+						<div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="reset" class="btn btn-secondary">Reset</button>							
+						</div>
+				    </form>
+			   	 </div>
+			    </div>
+			    <div class="col">Column</div>
+			    <div class="col">Column</div>
+			    <div class="col">Column</div>
+			  </div>
+			</div>
+          </section>
+		  <!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">    
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+          <!-- Dashboard Header Section    -->
+           <section id="elementtopmargin" class="dashboard-header">
+			<div class="container">
+			  <div class="row row-cols-2">	
+			  	<div class="col-12">
+				  <div class="statistic d-flex align-items-center bg-white has-shadow">
+   			  	 	<div class="tableheader statistic d-flex align-items-left bg-violet has-shadow"><h1>Project Details</h1></div>				  
+					   <form th:action="/updateProject/{id}(id=${project.id})" th:object=${project}></form>
+					   <table class="table" th:each="project : ${project}">
+						<tr>
+							<th scope="col">Project name</th>
+							<th scope="col">Description</th>				
+						</tr>
+						<tr>
+							<input th:text="*{projectName}" th:field="*{projectName}"/></td>
+				            <span th:if="${#fields.hasErrors('projectName')}" th:errors="projectName"></span>
+				            <td><input th:text="*{projectDescription}" th:field="*{projectDescription}"/></td>            
+				            <span th:if="${#fields.hasErrors('projectDescription')}" th:errors="*{projectDescription}"></span>			
+						</tr>	
+						<tr>						
+						 	<td><a th:href="@{/updateProject/{id}(id=${project.id})}">Edit</a></td>	
+						 	<td sec:authorize="hasAnyRole('ROLE_Administrator', 'ROLE_Project_Manager')"><a th:href="@{/deleteProject/{id}(id=${project.id})}" 
+					        th:data-confirm-delete="|Are you sure you want to delete project : ${project.projectName}?|"
+					  		onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a></td>	
+						</tr>
+					</table>
+				   	 </div>
+			   	 </div>
+				</div>
+				</div>
+			</section>		
+          <!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>

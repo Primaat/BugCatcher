@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">    
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+          <!-- Dashboard Header Section    -->
+           <section id="elementtopmargin" class="dashboard-header">
+			<div class="container">
+			  <div class="row row-cols-2">	
+			  	<div class="col-12">
+				  <div class="statistic d-flex align-items-center bg-white has-shadow">
+   			  	 	<div class="tableheader statistic d-flex align-items-left bg-violet has-shadow"><h1>Project Details</h1></div>				  
+					   <table class="table" th:each="project : ${project}">
+						<tr>
+							<th scope="col">Project name</th>
+							<th scope="col">Description</th>				
+						</tr>
+						<tr>
+							<td th:text="${project.projectName}">Windows</td>
+						 	<td th:text="${project.projectDescription}">It's an OS u kno!</td>			
+						</tr>	
+						<tr>						
+						 	<td><a th:href="@{/updateProject/{id}(id=${project.id})}">Edit</a></td>	
+						 	<td sec:authorize="hasAnyRole('ROLE_Administrator', 'ROLE_Project_Manager')"><a th:href="@{/deleteProject/{id}(id=${project.id})}" 
+					        th:data-confirm-delete="|Are you sure you want to delete project : ${project.projectName}?|"
+					  		onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a></td>	
+						</tr>
+					</table>
+				   	 </div>
+			   	 </div>
+				</div>
+				</div>
+			</section>			
+			<section class="dashboard-header">
+				<div class="container">	
+					<div class="row row-cols-2">
+						<div class="col">
+						  <div class="statistic d-flex align-items-left bg-white has-shadow">
+	     			  	 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow"><h1>Assigned Users</h1></div>				  
+						  	<table id="table_id1"class="display">
+							  <tbody>
+							    <tr th:each="user : ${projectUsers}">
+								 	<th scope = "row" th:text="${user.fullName}" value="0">Name</td>
+								 	<td th:text="${user.emailAddress}">Email</td>
+								 	<td>
+						   				<ul>
+						   					<li><a th:href="@{/messageUser/{id}(id=${user.id})}">Message</a></li>					   				
+						   					<li><a th:href="@{/removeFromProject/{id}(id=${user.id})}" 
+										        th:data-confirm-delete="|Are you sure you want to remove ${user.fullName} from this project?|"
+										  		onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a>
+									  		</li>					   				
+						   				</ul>
+						   			</td>
+								 </tr>
+						      </tbody>
+							</table>
+							<script type="text/javascript">$(document).ready(function() {
+					    	  $('#table_id1').DataTable({	
+					    		    "order": [ 2, 'desc' ],						    	    					    	  
+					    		    "columns": [{
+					    		        "title": "Username"
+					    		      },
+					    		      {
+					    		        "title": "Emailaddress"
+					    		      },
+					    		      {
+					    		        "title": ""
+					    		      }
+					    		    ]					    		    
+					    		  });
+					    		});
+				    		</script>
+						  </div>
+						</div>
+					    <div class="col">
+						  <div class="statistic d-flex align-items-left bg-white has-shadow">
+	     			  	 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow"><h1>Tickets</h1></div>				  
+						  	<table id="table_id2"class="display">
+							  <tbody>
+   					   			<tr th:each="ticket : ${projectTickets}">
+						   			<td th:text="${ticket.title}">title</td>
+						   			<td th:text="${ticket.submitter}">submitter name</td>
+						   			<td th:text="${ticket.description}">description</td>					   			
+						   			<td>
+						   				<ul>
+						   					<li><a th:href="@{/ticket/{id}(id=${ticket.id})}">Ticket details</a></li>					   				
+						   				</ul>
+						   			</td>
+						   		</tr>					   		
+						      </tbody>
+							</table>
+							<script type="text/javascript">$(document).ready(function() {
+					    	  $('#table_id2').DataTable({	
+					    		    "order": [ 2, 'desc' ],						    	    					    	  
+					    		    "columns": [{
+					    		        "title": "Title"
+					    		      },
+					    		      {
+					    		        "title": "Submitter"
+					    		      },
+					    		      {
+					    		        "title": "Description"
+					    		      },
+					    		      {
+						    		        "title": ""
+					    		      }
+					    		    ]					    		    
+					    		  });
+					    		});
+				    		</script>
+						  </div>
+						</div>   
+			  		</div>
+		  		</div>
+          </section>
+          <!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>

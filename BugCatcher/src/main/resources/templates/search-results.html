@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">    
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+          <!-- Dashboard Header Section    -->
+          <section id="elementtopmargin" class="dashboard-header">
+			<div class="container">
+			  <div class="row row-cols-1">			  	
+			  <div class="col">
+				  <div class="statistic d-flex align-items-left bg-white has-shadow">
+			 		 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow">
+	   			  	 		<h1>Search Results for : Tickets</h1>
+	   			  	 	</div>
+	   			  	 	<table id="table_tickets" class="display table-striped">
+					   <tbody>
+					    <tr th:each="ticket : ${ticketResults}">
+						 	<th scope = "row" th:text="${ticket.id}" value="0"></td>
+						 	<td th:text="${ticket.title}"></td>
+						 	<td th:text="${ticket.description}"></td>	
+						 	<td th:text="${ticket.ticketPriority}"></td>
+						 	<td th:text="${ticket.ticketStatus}"></td> 
+						 	<td th:text="${ticket.ticketType}"></td> 	
+						 	<td th:text="${#temporals.format(ticket.creationTimeStamp, 'dd-MM-yyyy HH:mm')}">Bonk</td> 	
+						 	<td>
+							 	<ul>
+							 		<li><span><a th:href="@{/ticket/{id}(id=${ticket.id})}">Details</a></span></li>
+							 		<li><span><a th:href="@{/modify/{id}(id=${ticket.id})}">Edit</a></span></li>
+							 	</ul>					 	
+					  		</td>	 		
+						</tr>
+				      </tbody>
+					</table>
+					<script type="text/javascript">$(document).ready(function() {
+			    	  $('#table_tickets').DataTable({
+			    		    "columns": [{
+			    		        "title": "#"
+			    		      },
+			    		      {
+			    		        "title": "Title"
+			    		      },
+			    		      {
+			    		        "title": "Description"
+			    		      },
+			    		      {
+			    		        "title": "Ticket Priority"
+			    		      },
+			    		      {
+			    		        "title": "Ticket Status"
+			    		      },
+			    		      {
+			    		        "title": "Ticket Type"
+			    		      },
+			    		      {
+			    		        "title": "Creation Time"
+			    		      },
+			    		      {
+			    		        "title": ""
+			    		      }
+			    		    ]
+			    		  });
+			    		});
+		    		</script>
+				  </div>
+				  </div>
+				</div>	
+			</section>
+						<section class="dashboard-header">
+			<div class="container">
+			  <div class="row row-cols-1">			  	
+			  <div class="col">
+				  <div class="statistic align-items-left bg-white has-shadow">
+				 		<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow">
+	   			  	 		<h1>Search Results for : Projects</h1>
+	   			  	 	</div> 
+	   			  	 	<table id="table_projects" class="display table-striped">
+					   <tbody>
+					    <tr th:each="project : ${projectResults}">
+						 	<th scope = "row" th:text="${project.id}" value="0">123</td>
+						 	<td th:text="${project.projectName}">Jack</td>
+						 	<td th:text="${project.projectDescription}">Human</td>	
+						 	<td>
+							 	<ul>
+							 		<li><span><a th:href="@{/project/{id}(id=${project.id})}">Details</a></span></li>	 	
+								 	<li sec:authorize="hasAnyRole('ROLE_Administrator', 'ROLE_Project_Manager')"><span><a th:href="@{/manageProjectUsers/{id}(id=${project.id})}">Manage Users</a></span></li>
+							 	</ul>					 	
+					  		</td>	 		
+						</tr>
+				      </tbody>
+					</table>
+					<script type="text/javascript">$(document).ready(function() {
+			    	  $('#table_projects').DataTable({
+			    		    "columns": [{
+			    		        "title": "#"
+			    		      },
+			    		      {
+			    		        "title": "Project name"
+			    		      },
+			    		      {
+			    		        "title": "Description"
+			    		      },
+			    		      {
+			    		        "title": ""
+			    		      }
+			    		    ]
+			    		  });
+			    		});
+		    		</script>
+				  </div>
+				  </div>
+				</div>	
+			</section>
+			<section class="dashboard-header">
+			<div class="container">
+			  <div class="row row-cols-1">			  	
+			  <div class="col">
+				  <div class="statistic align-items-left bg-white has-shadow">
+				 		<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow">
+	   			  	 		<h1>Search Results for : Users</h1>
+	   			  	 	</div>
+	   			  	 	<table id="table_users" class="display table-striped">
+					   <tbody>
+					    <tr th:each="user : ${userResults}">
+						 	<th scope = "row" th:text="${user.id}" value="0"></td>
+						 	<td th:text="${user.fullName}"></td>
+						 	<td th:text="${user.emailAddress}"></td>	
+						 	<td th:text="${user.role}"></td>
+						 	<td>
+							 	<ul>
+							 		<li sec:authorize="hasAnyRole('ROLE_Administrator', 'ROLE_Project_Manager')"><span><a th:href="@{/user/{id}(id=${user.id})}">Manage</a></span></li>
+							 		<li sec:authorize="hasAnyRole('ROLE_Administrator', 'ROLE_Project_Manager')"><span><a th:href="@{/user/update/{id}(id=${user.id})}">Edit</a></span></li>
+							 	</ul>					 	
+					  		</td>	 		
+						</tr>
+				      </tbody>
+					</table>
+					<script type="text/javascript">$(document).ready(function() {
+			    	  $('#table_users').DataTable({
+			    		    "columns": [{
+			    		        "title": "#"
+			    		      },
+			    		      {
+			    		        "title": "User Name"
+			    		      },
+			    		      {
+			    		        "title": "Email Address"
+			    		      },
+			    		      {
+			    		        "title": "Role"
+			    		      },
+			    		      {
+			    		        "title": ""
+			    		      }
+			    		    ]
+			    		  });
+			    		});
+		    		</script>
+				  </div>
+				  </div>
+				</div>	
+			</section>
+			<!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>

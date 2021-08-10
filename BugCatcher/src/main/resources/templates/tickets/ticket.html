@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+          <!-- Dashboard Header Section    -->
+          <section id="elementtopmargin" class="dashboard-header">
+			<div class="container">
+			  <div class="row row-cols-2">	
+			  	<div class="col">
+				  <div class="statistic d-flex align-items-center bg-white has-shadow">
+   			  	 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow"><h1>Ticket Details</h1></div>				  
+					   <table class="table" th:each="ticket : ${tickets}">
+						<tr>
+							<th scope="col">Title</th>
+							<th scope="col">Description</th>				
+						</tr>
+						<tr>
+							<td rows="3" cols="16" th:text="${ticket.title}">Jack</td>
+						 	<td><textarea rows="5" cols="26" th:text="${ticket.description}" readonly></textarea> </td>			
+						</tr>	
+						<tr>
+							<th>Assigned Developer</th>
+							<th>Submitter</th>
+						</tr>
+						<tr>
+							<td>
+								<table class="table">
+									<tr th:each="user : ${assignedUsers}">
+										<td th:text="${user.fullName}">No Assigned Users</td>
+									</tr>							
+								</table>
+							</td>
+							<td th:text="${ticket.submitter}">A Submitter</td>		
+						</tr>	
+						<tr>
+							<th>Project</th>
+							<th>Ticket Priority</th>
+						</tr>
+						<tr>
+							<td th:text="${ticket.projectName}">A project</td>
+						 	<td th:text="${ticket.ticketPriority}">YES</td>	
+						</tr>
+						<tr>
+							<th>Ticket Status</th>		
+							<th>Ticket Type</th>	
+						</tr>
+						<tr>
+						 	<td th:text="${ticket.ticketStatus}">Nothing</td> 
+						 	<td th:text="${ticket.ticketType}">Nothing</td> 		
+						</tr>
+						<tr>
+							<th>Creation Time</th>
+							<th>Last updated</th>	
+						</tr>
+						<tr>
+						 	<td th:text="${#temporals.format(ticket.creationTimeStamp, 'dd-MM-yyyy HH:mm')}">Nothing</td>	
+							<td th:text="${#temporals.format(ticket.modifiedTimeStamp, 'dd-MM-yyyy HH:mm')}"> An updated timestamp</td>
+						</tr>
+						<tr>
+						 	<td><a th:href="@{/modify/{id}(id=${ticket.id})}">Edit</a></td>	
+						 	<td><a th:href="@{/delete/{id}(id=${ticket.id})}" 
+					        th:data-confirm-delete="|Are you sure you want to ticket no.: ${ticket.id}?|"
+					  		onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a></td>	
+						</tr>
+					</table>
+				   	 </div>
+			   	 </div>
+			  <div class="col">
+			  <section id="sectiontopmargin" class="dashboard-header ">
+			  	<div>
+			  		<div><h4>Add a comment?</h4></div>
+			  		<div>				  	
+			  			<form id="comment" th:action="@{/addComment/{ticketId}(ticketId=${comment.ticketIdNum})}" th:object="${comment}" method="post">
+			  				<input type="text" size="45" class="form-control" th:value="*{message}" name = "message" required/>
+							<input type="hidden" th:value="*{ticketIdNum}" name="ticketIdNum" />	
+							<input type="hidden" th:value="*{creator}" name="creator" />			  				
+							<input type="hidden" th:value="*{userIdNum}" name="userIdNum" />							  				
+			  				<input class="btn btn-success" type="submit" value="Add" />
+			  			</form>
+					</div>			  		
+			  	</div>
+			  	</section>
+			  	<section class="dashboard-header">
+				  <div class="statistic d-flex align-items-left bg-white has-shadow">
+   			  	 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow"><h1>Comments</h1></div>			  
+				  
+				  <table id="table_id" class="display datatable">
+					  <tbody>
+					    <tr th:each="comment : ${comments}">
+						 	<td th:text="${comment.creator}" value="0">Jack</td>
+						 	<td th:text="${comment.message}">This and That</td>
+						 	<td th:text="${#temporals.format(comment.creationTimeStamp, 'dd-MM-yyyy HH:mm')}">Today</td>	
+						 </tr>
+				      </tbody>
+					</table>
+					<script type="text/javascript">$(document).ready(function() {
+			    	  $('#table_id').DataTable({
+			    		  	"order": [ 2, 'desc' ],
+			    		    "columns": [{
+			    		        "title": "Creator"
+			    		      },
+			    		      {
+			    		        "title": "Message"
+			    		      },
+			    		      {
+			    		        "title": "Creation time"
+			    		      }
+			    		    ]
+			    		  });
+			    		});
+		    		</script>
+				  </div>
+ 			  	</section>				  
+				  </div>
+				</div>	
+			</section>
+			<section class="dashboard-header">
+				<div class="container">	
+					<div class="row row-cols-2">
+						<div class="col">
+						  <div class="statistic d-flex align-items-left bg-white has-shadow">
+	     			  	 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow"><h1>Ticket History</h1></div>				  
+						  	<table id="table_id1"class="display">
+							  <tbody>
+							    <tr th:each="h : ${history}">
+								 	<th scope = "row" th:text="${h.action}" value="0">Action</td>
+								 	<td th:text="${h.modifierName}">Jack did this</td>
+								 	<td th:text="${#temporals.format(h.modifiedTimeStamp, 'dd-MM-yyyy HH:mm')}">Time</td>
+								 </tr>
+						      </tbody>
+							</table>
+							<script type="text/javascript">$(document).ready(function() {
+					    	  $('#table_id1').DataTable({	
+					    		    "order": [ 2, 'desc' ],						    	    					    	  
+					    		    "columns": [{
+					    		        "title": "Action"
+					    		      },
+					    		      {
+					    		        "title": "Modified by"
+					    		      },
+					    		      {
+					    		        "title": "Modified Date"
+					    		      }
+					    		    ]					    		    
+					    		  });
+					    		});
+				    		</script>
+						  </div>
+						</div>
+					    <div class="col">
+					       <section id="sectiontopmargin" class="dashboard-header "> 
+						  	<div>
+						  		<div><h4>Add an Attachment?</h4></div>
+						  		<div>				  	
+						  			<form enctype="multipart/form-data" th:action="@{/upload/{ticketId}(ticketId=${imageFile.ticketId})}" th:object="${imageFile}" method="post">
+						  				<input type="file" id="file" name="file"  />
+						  				<input type="description" id="description" size="30" class="form-control" placeholder="description" name = "description" required/>
+						  				<input class="btn btn-success" type="submit" value="Add" />
+						  			</form>
+								</div>			  		
+						  	</div>
+					  	</section>
+					  	<section class="dashboard-header">
+					  	<div class="statistic d-flex align-items-left bg-white has-shadow"> 
+	  	 				  <div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow"><h1>Ticket Attachments</h1></div>
+	  	 				  	<table class="table">
+	  	 				  		<tr>
+	  	 				  			<th scope="row">File</th>
+	  	 				  			<th>Uploader</th>
+	  	 				  			<th>Description</th>
+<!-- 	  	 				  			<th>uploaded</th> -->
+	  	 				  		</tr>
+	  	 				  		<tr th:unless="${imageFiles == null}" th:each="file : ${imageFiles}">
+	  	 				  			<td><a th:href="${file?.key?.path}"><span th:text="${file?.value}"></span></a></td>
+	  	 				  			<td th:text="${file?.key?.uploader}"></td>
+	  	 				  			<td th:text="${file?.key?.description}"></td>
+	  	 				  			<td></td>
+<!-- 	  	 				  			<td th:text="${#temporals.format(file.key.uploadTimeStamp, 'dd-MM-yyyy HH:mm')}"></td>	  	 				  			 -->
+	  	 				  		</tr>
+	  	 				  		
+	  	 				  	</table>		
+<!--    			  	 			<table id="table_id2"class="display" > -->
+<!-- 							  <tbody> -->
+<!-- 								 <tr th:each="file : ${files}"> -->
+<!-- 								 	<th scope = "row"><a th:href="@{|/files/{filename:.+}(filename=${file})|}"><span th:text="${file}"></span></a></td> -->
+<!-- 								 	<td>This</td> -->
+<!-- 								 	<td>this</td> -->
+<!-- 								 	<td>this</td> -->
+<!-- 								 </tr> -->
+<!-- 						      </tbody> -->
+<!-- 							</table> -->
+<!-- 							<script type="text/javascript">$(document).ready(function() { -->
+<!-- // 					    	  $('#table_id2').DataTable({  -->
+<!-- // 					    		    "columns": [{  -->
+<!-- //  					    		        "title": "File"  -->
+<!-- //  					    		      },  -->
+<!-- // 					    		      {  -->
+<!-- // 					    		        "title": "Uploader"  -->
+<!-- // 					    		      },  -->
+<!-- // 					    		      {  -->
+<!-- // 					    		        "title": "Description"  -->
+<!-- //  					    		      },  -->
+<!-- // 					    		      { -->
+<!-- //  				    		    	    "title": "Uploaded"  -->
+<!-- // 					    		      }  -->
+<!-- //  					    		    ], -->
+<!-- //  					    		    columnDefs: [ { -->
+<!-- //  								        targets: 0, -->
+<!-- //  								        render: function ( data, type, row ) { -->
+<!-- //  								            return data.substr( 28, 16 ); -->
+<!-- //  								        } -->
+<!-- //  								    } ]  -->
+<!-- //  					    		  });  -->
+<!-- //  					    		});  -->
+<!-- 				    		</script>		   -->
+						  </div> 
+						</div>  
+						</section> 
+			  		</div>
+		  		</div>
+          </section>
+         <!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">   	
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+          <!-- Dashboard Header Section    -->
+          <section id="elementtopmargin" class="dashboard-header">
+           <div class="container">
+			  <div class="row row-cols-2">	
+			  <div class="col">
+				  <div class="statistic d-flex align-items-left bg-white has-shadow" text="">
+   			  	 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow">
+   			  	 		<h1 th:if="${projectName != null}" th:text="${'Assign Employee to ' + projectName}">Manage Project Users</h1>
+  			  	 		<h1 th:unless="${projectName != null}" >Manage Project Users</h1>   			  	 		
+		  	 		</div>
+<!--    			  	 	<form action="#" th:action="@{/assignUser/{id}(id=${projectId})}"  th:object="${userDTO}" method="POST"> -->
+<!-- 	   			  	 	<select class="form-select"  aria-label="multiple select example" multiple> -->
+<!-- 						  <option th:each="uUser, itemStat : ${userDTO.users}" th:name="|users[${itemStat.index}].fullName|" th:text="${uUser.getFullName()}" th:value="${uUser.getFullName()}">user</option> -->
+<!-- 						</select>	 -->
+<!-- 						<br> -->
+<!-- 						<input class="btn btn-success" name="assign" type="submit" value="Assign All" /> -->
+<!-- 					</form> -->
+<!--    			  	 	<form id= "assignForm" th:action="@{/assignUser}" th:object="${user}" method="post">			   -->
+<!-- 					  <table id="table_unAssignedUsers" class="display">					   -->
+<!-- 						  <tbody> -->
+<!-- 						    <tr th:each="uUser : ${unassignedUsers}" th:if="${uUser.role != 'General_User'}" > -->
+<!-- 							 	<td th:text="${uUser.id}" value="0">123</td> -->
+<!-- 							 	<td th:text="${uUser.fullName}">Jack</td> -->
+<!-- 							 	<td>  -->
+<!-- 							 			<input id="userIdInput" th:value="${uUser.id}" hidden>						 	 -->
+<!-- 	 									<input type="input" name="action" value="Assign" onclick="javascript:toggle(this);" th:each="unassigned : ${unassignedUsers}" th:if="${unassigned.fullName} == ${uUser.fullName}" th:value="${'Assign'}" class="btn bg-violet" readonly="readonly"> -->
+<!--   									<input type="input" name="action" value="Assign" onclick="javascript:toggle(this);" th:each="unassigned : ${unassignedUsers}" th:if="${unassigned.fullName} == ${uUser.fullName}" th:value="${'Assign'}" class="btn bg-violet" readonly="readonly"> --> 
+	 									
+<!-- 						 		</td>						 	 -->
+<!-- 							 </tr> -->
+<!-- 					      </tbody> -->
+<!-- 						</table> -->
+<!-- 					</form> -->
+<!-- 					<script type="text/javascript"> -->
+<!-- // 					// Toggles the passed button from OFF to ON and vice-versa. -->
+<!-- // 				        function toggle(input) { -->
+<!-- // 				            switch (input.value) { -->
+<!-- // 				                case "Unassign": -->
+<!-- // 				                	input.value = "Assign"; -->
+<!-- // 				                	input.className = "btn bg-violet" -->
+<!-- // 				                    break; -->
+<!-- // 				                case "Assign": -->
+<!-- // 				                	input.value = "Unassign"; -->
+<!-- // 				                	input.className = "btn bg-red" -->
+<!-- // 				                    break; -->
+<!-- // 				            }; -->
+<!-- // 				            $.ajax({ -->
+<!-- // 				                url : 'assign', -->
+<!-- // 				                type : 'POST', -->
+<!-- // 				                data : $("#userIdInput").val(), -->
+<!-- // 				                cache : false, -->
+<!-- // 				                contentType : false, -->
+<!-- // 				                processData : false, -->
+<!-- // 				                success : function(returndata) { -->
+<!-- // 				                } -->
+<!-- // 				            }); -->
+<!-- // 				        } -->
+<!--  				    </script>    --> 
+<!--  					<script type="text/javascript">$(document).ready(function() { --> 
+<!-- // 			    	  $('#table_unAssignedUsers').DataTable({ -->
+<!-- // 			    		    "columns": [{ -->
+<!-- // 			    		        "title": "#" -->
+<!-- // 			    		      }, -->
+<!-- // 			    		      { -->
+<!-- // 			    		        "title": "User Name" -->
+<!-- // 			    		      }, -->
+<!-- // 			    		      { -->
+<!-- // 			    		        "title": "" -->
+<!-- // 			    		      } -->
+<!-- // 			    		    ] -->
+<!-- // 			    		  }); -->
+<!-- // 			    		}); -->
+<!-- 		    		</script> -->
+				  </div>
+				  </div>		  	
+			  <div class="col">
+				  <div class="statistic d-flex align-items-left bg-white has-shadow">
+   			  	 	<div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow">
+   			  	 		<h1>Projects</h1>
+   			  	 	</div>						  
+				  <table id="table_id"class="display">
+					  <tbody>
+					    <tr th:each="project : ${projects}">
+						 	<th scope = "row" th:text="${project.id}" value="0">123</td>
+						 	<td th:text="${project.projectName}">Jack</td>
+						 	<td>
+							 	<a th:href="@{/manageProjectUsers/{id}(id=${project.id})}">Assign Users</a>
+						 	</td>
+						 </tr>
+				      </tbody>
+					</table>
+					<script type="text/javascript">$(document).ready(function() {
+			    	  $('#table_id').DataTable({
+			    		    "columns": [{
+			    		        "title": "#"
+			    		      },
+			    		      {
+			    		        "title": "Project Name"
+			    		      },
+			    		      {
+			    		        "title": ""
+			    		      }
+			    		    ]
+			    		  });
+			    		});
+		    		</script>
+				  </div>
+				  </div>
+				</div>	
+          </section>
+          <!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>

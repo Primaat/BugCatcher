@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="eng" xmlns:th="http://www.thymeleaf.org">
+  <head th:insert="fragments/general.html :: headerFiles">    
+  </head>
+  <body>
+  	<!-- MAIN PAGE DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->
+    <div class="page">
+      <!-- Main Navbar-->
+      <header th:insert="fragments/general.html :: mainNavbar">        
+      </header>
+	  <!-- PAGE CONTENT DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->      
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav th:insert="fragments/general.html :: sideNavbar" class="side-navbar">
+        </nav>
+   	    <!-- INNER CONTENT/FOOTER DIV, DOES NOT FRAGMENT! DO NOT TOUCH THIS!!! -->        
+        <div class="content-inner">
+          <!-- Dashboard Header Section    -->
+          <section id="elementtopmargin" class="dashboard-header">
+			<div class="container">
+			  <div class="row row-cols-2">	
+			  	<div class="col-7">
+				  <div class="statistic d-flex align-items-center bg-white has-shadow">
+				  <div class="tableheader-small statistic d-flex align-items-left bg-violet has-shadow">
+		  	 		<h1>Edit Your Profile</h1>
+	  	 		  </div>	
+	  	 		  <form id= "userForm" th:action="@{/user/update/{id}(id=${user.id})}" th:object="${user}" method="post">
+				   <table class="table" th:each="user : ${user}">
+   						<tr>
+							<th scope="col">First name</th>
+							<th scope="col">Last name</th>				
+						</tr>
+						<tr>
+							<td><input class="form-control" type="text" th:field="*{firstName}"></td>
+				            <span th:if="${#fields.hasErrors('firstName')}" th:errors="firstName"></span>
+				            <td><input class="form-control" type="text" th:field="*{lastName}"/></td>            
+				            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>				
+						</tr>	
+						<tr>
+							<th>Email address</th>
+							<th>Role</th>
+						</tr>
+						<tr>
+							<td><input class="form-control" type="text" th:field="*{emailAddress}" /></td>
+				            <span th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}"></span>
+				            <td>
+				            	<select class="form-control" th:field="*{role}">
+									<option th:each="role : ${user.roles}" th:value="${role}" th:text="${role}"></option>
+								</select>
+							</td>		
+						</tr>	
+						<tr>
+				        	<td><input class="btn btn-success" type="submit" value="Submit" /></td> 
+							<td><a th:href="@{/profile}" class="btn btn-warning">&nbsp;Cancel</a></td>						
+				        </tr>	
+					</table>
+					</form>
+			   	   </div>
+			   	 </div>
+		   	   </div>
+		   	 </div>
+			</section>
+          <!-- Page Footer-->
+          <footer th:insert="fragments/general.html :: footer">            
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/general.html :: footerFiles"></div>
+  </body>
+</html>
