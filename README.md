@@ -26,3 +26,11 @@ At the main dashboard, users are welcomed by the different types of tickets curr
 
 In the top navigation, one finds a functional search bar, a message icon ( messaging to be implemented soon) and a functional logout button which sends the user back to the login screen.
 
+<img width="919" alt="BugCatcherLogin" src="https://user-images.githubusercontent.com/17933614/128924983-a242cdc7-abb8-44f0-8287-a4b2397ac7bd.png">
+
+<img width="929" alt="BugCatcherDashboard" src="https://user-images.githubusercontent.com/17933614/128925025-b6690126-5d40-4b47-913a-1cee796cc888.png">
+
+<img width="909" alt="BugCatcherManageUsers" src="https://user-images.githubusercontent.com/17933614/128925050-7841d86d-e43f-41a1-b9ef-0dd105212ac7.png">
+
+<img width="929" alt="BugCatcherAssignUsers" src="https://user-images.githubusercontent.com/17933614/128925070-2bf854b5-b6c3-4fde-a922-4534e42447b1.png">
+
