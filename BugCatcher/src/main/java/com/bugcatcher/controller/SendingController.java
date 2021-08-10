@@ -93,5 +93,4 @@ public class SendingController {
         return "redirect:sent.html";
 
     }
-
 }
