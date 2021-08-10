@@ -9,13 +9,13 @@ Languages, tools and frameworks used:
 
 Java, Spring Boot, Spring security, Spring REST, Maven, hibernate, Thymeleaf, HTML5, CSS, JavaScript, Ajax, H2 Database, Eclipse IDE
 
-To do:
+<h3>To do:</h3>
 
 Implement messaging system
 Implement assign ticket to user function 
 Change inconsistencies, Clean, refactor and solve some minor bugs and issues.
 
-Using the app:
+<h3>Using the app:</h3>
 
 The app comes with random data created when it is first started. This data ( users, tickets, projects) are stored in JPA repositories on the H2 database.
 A user can create an account, currently I have allowed the choice of user roles while signing up so the previewer can see the slight differences for each role while navigating the app. If the password was lost, the user can request a password token. ( currently not available as I had used my own gmail account to test this, details which I have removed from the app for security reasons, will add another solution in a future update)
